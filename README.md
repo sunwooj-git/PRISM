@@ -86,30 +86,6 @@ repo. Not imported by `prism/` and not needed to run inference.
 - Generated expression is sampled from the trained negative-binomial
   decoder (mean + dispersion), not literally observed counts — realistic in
   distribution, not a real cell.
-- Per-cell-type program-score conditioning follows a 3-tier fallback that
-  matches `paper/bm_generation_v6.py`'s original `generate_bm_twostage_per_ct`
-  exactly: (1) the donor's own mean whenever they have at least one bone
-  marrow-like cell of that type (verified this locates generated cells
-  correctly even from single-digit samples; a low-sample-size note is
-  printed below `prism.config.MIN_CELLS_PER_TYPE_FOR_CONDITIONING` cells,
-  informational only), (2) the real reference population's per-cell-type
-  mean for a type the donor has zero cells of, (3) the donor's own
-  cross-type tail mean (over their full blood population, not just the
-  bone marrow-like-gated subset) as a last resort only.
-- Output 1 (`celltype_proportions`) is the donor's own direct, empirical
-  bone marrow-like cell-type composition. Generation itself (Output 3/4)
-  uses a *separate* proportion estimate instead: k-NN retrieval against
-  the real reference bone marrow cohort (k=20, matching the original
-  pipeline's `paper/bm_retrieval_v4.py`/`generate_bm_from_blood_v3`
-  exactly), which pools each of the donor's own top-10%-marrowness blood
-  cells' nearest real reference neighbors and tallies their real cell
-  types. This smooths over a donor's own sparse per-type label counts --
-  a cell type absent from a donor's own CellTypist labels can still get
-  nonzero generated proportion if cells embedding near their bone
-  marrow-like cells are common in the reference (verified directly: real
-  patient8 blood only has direct labels for 3 of the 11 trained types
-  among its bone marrow-like cells, but retrieval-based generation
-  produces 5, each landing on its correct real reference cluster).
 - The CellTypist fine-to-coarse label mapping (`prism/_celltypist_map.py`'s
   `_build_coarse_map` / `_COARSE_RULES`) is the project's own rule, not
   independently re-verified in this workspace against the exact CellTypist
