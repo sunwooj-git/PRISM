@@ -11,16 +11,6 @@ blood, extracts interpretable transcriptional programs, and generates
 donor-specific synthetic BM cells — in contrast to methods that target
 population-level realism rather than preserving individual donor identity.
 
-**Pipeline**: a tissue-classifying encoder (blood vs. bone marrow, built on
-an scVI joint embedding) produces a per-cell "marrowness" score → the top
-decile of a donor's own blood by marrowness is treated as bone marrow-like →
-those cells are projected onto 5 trained NMF transcriptional programs → a
-conditional normalizing flow + negative-binomial gene decoder generate
-synthetic bone marrow cells conditioned on that donor's own program scores
-and cell types.
-
-The model is trained once, shipped with fixed weights. Running PRISM on your
-own data is inference only — no training happens as part of normal use.
 
 ## Installation
 
