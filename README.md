@@ -25,6 +25,8 @@ own data is inference only — no training happens as part of normal use.
 ## Installation
 
 ```bash
+git clone https://github.com/sunwooj-git/PRISM.git
+cd PRISM
 pip install -e .
 ```
 
