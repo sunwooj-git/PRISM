@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install package
+        run: pip install -e ".[dev]"
+
+      - name: Run tests
+        run: pytest tests/ -v
+        # test_quickstart.py's tests skip automatically unless PRISM_WEIGHTS_DIR
+        # points at the trained weights (~150MB) -- wire that up as a secret/
+        # cache step once weights are published to Hugging Face Hub, e.g.:
+        #   env:
+        #     PRISM_WEIGHTS_DIR: ${{ github.workspace }}/weights
+        #   (preceded by a step that downloads them). Until then, only the
+        # always-on sanity checks in test_imports.py run in CI.

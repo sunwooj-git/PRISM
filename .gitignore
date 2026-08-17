@@ -1,0 +1,21 @@
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.DS_Store
+
+# Trained weights (~440MB) are distributed separately (Zenodo), not
+# committed to git. This directory is the local staging copy used to
+# build/test that release.
+weights/
+
+# Original training/evaluation code -- not part of the public package
+# release, kept locally only.
+paper/
+
+# Generated at runtime, not part of the repo.
+examples/outputs/
+.cache/
