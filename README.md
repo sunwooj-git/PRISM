@@ -82,7 +82,7 @@ Note: trained model weights (~150MB) are not part of this repo — they're
 distributed separately via Zenodo and downloaded automatically by
 `prism.load_model()` on first use (see Installation above).
 
-## Known limitations / design notes
+## Design notes
 
 - Generated expression is sampled from the trained negative-binomial
   decoder (mean + dispersion), not literally observed counts — realistic in
@@ -95,10 +95,6 @@ distributed separately via Zenodo and downloaded automatically by
   any cell landing there is caught by the hard-error check rather than
   silently reaching generation, but review it if ILC cells are common in
   your data.
-- `weights/consensus_embeddings.npz` and `consensus_blood_reference.npz`
-  (full training-cohort diagnostic dumps) are intentionally excluded from
-  the download set `prism.load_model()` fetches — nothing in the inference
-  path reads them.
 
 ## Citation
 
