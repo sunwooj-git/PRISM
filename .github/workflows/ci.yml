@@ -21,7 +21,7 @@ jobs:
         run: pytest tests/ -v
         # test_quickstart.py's tests skip automatically unless PRISM_WEIGHTS_DIR
         # points at the trained weights (~150MB) -- wire that up as a secret/
-        # cache step once weights are published to Hugging Face Hub, e.g.:
+        # cache step once the weights are public on Zenodo, e.g.:
         #   env:
         #     PRISM_WEIGHTS_DIR: ${{ github.workspace }}/weights
         #   (preceded by a step that downloads them). Until then, only the

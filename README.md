@@ -72,15 +72,20 @@ PRISM accepts exactly one input: a blood scRNA-seq `AnnData`.
   CellTypist labeling, reporting).
 - **`examples/`** — `quickstart.py`, `toy_sample.h5ad` (synthetic single-donor
   demo data), `make_toy_sample.py` (regenerates it).
+- **`tests/`** — `test_imports.py` (always runs in CI), `test_quickstart.py`
+  (exercises full inference against real weights; skips automatically unless
+  `PRISM_WEIGHTS_DIR` is set).
 - **`scripts/`** — maintainer-only utilities (`repair_missing_artifacts.py`
   — see its docstring for what it fixed and why, kept for provenance).
-- **`weights/`** — local staging copy of the trained model artifacts (not
-  committed to git — see `.gitignore`; distributed via Zenodo).
 
 The original training/evaluation code (`paper/`: encoder + NMF training,
 flow/gene-decoder training, k-NN retrieval baseline, evaluation metrics) is
 kept locally for reproducing the paper's results but is not part of this
 repo. Not imported by `prism/` and not needed to run inference.
+
+Trained model weights (~150MB) are likewise not part of this repo — they're
+distributed separately via Zenodo and downloaded automatically by
+`prism.load_model()` on first use (see Installation above).
 
 ## Known limitations / design notes
 
