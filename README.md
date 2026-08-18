@@ -3,13 +3,14 @@
 **PR**ogram-conditioned **I**nference of donor-**S**pecific **M**arrow
 
 PRISM infers donor-specific bone marrow (BM) biology from peripheral blood
-single-cell RNA-seq data. Bone marrow scRNA-seq is scarce (sampling it is
-invasive); peripheral blood is accessible and biologically continuous with
-marrow — many cell types are shared, and blood carries latent signatures of
-marrow biology. PRISM identifies bone marrow-like cells within a donor's own
-blood, extracts interpretable transcriptional programs, and generates
-donor-specific synthetic BM cells — in contrast to methods that target
-population-level realism rather than preserving individual donor identity.
+single-cell RNA-seq data. Bone marrow scRNA-seq is scarce due to technical
+and ethical barriers; peripheral blood is accessible and biologically
+continuous with marrow — many cell types are shared, and blood carries
+latent signatures of marrow biology. PRISM identifies bone marrow-like cells
+within a donor's own blood, extracts interpretable transcriptional programs,
+and generates donor-specific synthetic BM cells — in contrast to methods
+that target population-level realism rather than preserving individual
+donor identity.
 
 
 ## Installation
