@@ -78,12 +78,7 @@ PRISM accepts exactly one input: a blood scRNA-seq `AnnData`.
 - **`scripts/`** — maintainer-only utilities (`repair_missing_artifacts.py`
   — see its docstring for what it fixed and why, kept for provenance).
 
-The original training/evaluation code (`paper/`: encoder + NMF training,
-flow/gene-decoder training, k-NN retrieval baseline, evaluation metrics) is
-kept locally for reproducing the paper's results but is not part of this
-repo. Not imported by `prism/` and not needed to run inference.
-
-Trained model weights (~150MB) are likewise not part of this repo — they're
+Note: trained model weights (~150MB) are not part of this repo — they're
 distributed separately via Zenodo and downloaded automatically by
 `prism.load_model()` on first use (see Installation above).
 
