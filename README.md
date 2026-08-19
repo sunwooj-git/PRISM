@@ -22,7 +22,7 @@ pip install -e .
 ```
 
 Requires Python >=3.10 (scvi-tools' dependency floor). Trained weights
-(~150MB) download automatically from PRISM's Zenodo deposit the first time
+(~215MB) download automatically from PRISM's Zenodo deposit the first time
 you call `prism.load_model()`, and are cached under `~/.cache/prism/weights`
 (override with the `PRISM_WEIGHTS_DIR` environment variable, or pass
 `local_dir=` directly to point at a local copy).
@@ -78,7 +78,7 @@ PRISM accepts exactly one input: a blood scRNA-seq `AnnData`.
 - **`scripts/`** — maintainer-only utilities (`repair_missing_artifacts.py`
   — see its docstring for what it fixed and why, kept for provenance).
 
-Note: trained model weights (~150MB) are not part of this repo — they're
+Note: trained model weights (~215MB) are not part of this repo — they're
 distributed separately via Zenodo and downloaded automatically by
 `prism.load_model()` on first use (see Installation above).
 

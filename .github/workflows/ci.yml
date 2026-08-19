@@ -20,7 +20,7 @@ jobs:
       - name: Run tests
         run: pytest tests/ -v
         # test_quickstart.py's tests skip automatically unless PRISM_WEIGHTS_DIR
-        # points at the trained weights (~150MB) -- wire that up as a secret/
+        # points at the trained weights (~215MB) -- wire that up as a secret/
         # cache step once the weights are public on Zenodo, e.g.:
         #   env:
         #     PRISM_WEIGHTS_DIR: ${{ github.workspace }}/weights

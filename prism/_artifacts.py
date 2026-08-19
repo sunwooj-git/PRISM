@@ -2,7 +2,7 @@
 Trained-weight distribution: download-on-first-use from PRISM's Zenodo
 deposit, cached locally so repeat runs don't re-download.
 
-The pip package itself ships no model weights (~150MB total for the files
+The pip package itself ships no model weights (~215MB total for the files
 actually needed at inference time -- see config.ARTIFACT_FILES). Excluded
 from that set are consensus_embeddings.npz (full-cohort diagnostic dump,
 ~170MB, not read by any inference-time code path) and consensus_blood_
@@ -12,9 +12,13 @@ available in the full training-artifact release for reproduction, just
 not fetched by this loader.
 """
 import os
+import shutil
+import ssl
 import urllib.request
 from pathlib import Path
 from typing import Optional
+
+import certifi
 
 from . import config
 
@@ -24,6 +28,16 @@ def _default_cache_dir() -> Path:
     if override:
         return Path(override)
     return Path.home() / ".cache" / "prism" / "weights"
+
+
+def _https_opener() -> urllib.request.OpenerDirector:
+    # Explicit certifi CA bundle rather than the platform default: on
+    # python.org-installed Python on macOS, urllib's default SSL context
+    # doesn't pick up the system trust store, causing
+    # CERTIFICATE_VERIFY_FAILED on first download -- confirmed directly
+    # against this project's own Zenodo deposit, not a hypothetical.
+    ctx = ssl.create_default_context(cafile=certifi.where())
+    return urllib.request.build_opener(urllib.request.HTTPSHandler(context=ctx))
 
 
 def get_artifact_dir(
@@ -65,8 +79,10 @@ def get_artifact_dir(
         f"[prism] Fetching {len(missing)} weight file(s) from "
         f"Zenodo record {record_id} -> {target_dir} (first use only)"
     )
+    opener = _https_opener()
     for fname in missing:
         url = f"https://zenodo.org/records/{record_id}/files/{fname}?download=1"
-        urllib.request.urlretrieve(url, str(target_dir / fname))
+        with opener.open(url) as response, open(target_dir / fname, "wb") as out:
+            shutil.copyfileobj(response, out)
 
     return target_dir
