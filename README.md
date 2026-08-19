@@ -96,6 +96,9 @@ distributed separately via Zenodo and downloaded automatically by
   silently reaching generation, but review it if ILC cells are common in
   your data.
 
+This repository accompanies a specific publication and is not accepting
+external contributions.
+
 ## Citation
 
 This work is currently under peer review. The citation below will be filled in once the associated article is published — please check back then, and refer to the article for detailed information about PRISM.
