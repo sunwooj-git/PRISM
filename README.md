@@ -67,8 +67,8 @@ PRISM accepts exactly one input: a blood scRNA-seq `AnnData`.
 
 ## Repo layout
 
-- **`prism/`** — the installable package (inference only: encoder, scVI
-  embedding, NMF program projection, flow + gene decoder generation,
+- **`prism/`** — the installable package (inference only: scVI embedding,
+  encoder, NMF program projection, flow + gene decoder generation,
   CellTypist labeling, reporting).
 - **`examples/`** — `quickstart.py`, `toy_sample.h5ad` (synthetic single-donor
   demo data), `make_toy_sample.py` (regenerates it).
