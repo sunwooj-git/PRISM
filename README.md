@@ -101,7 +101,7 @@ external contributions.
 
 ## Citation
 
-This work is currently under peer review. The citation below will be filled in once the associated article is published — please check back then, and refer to the article for detailed information about PRISM.
+This work is currently under review. The citation below will be filled in once the associated article is published — please check back then, and refer to the article for detailed information about PRISM.
 
 If you use PRISM, please cite:
 
