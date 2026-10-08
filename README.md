@@ -43,7 +43,7 @@ donor.n_bonemarrowlike, donor.n_cells_total          # bone marrow-like cell cou
 donor.bonemarrowlike_threshold_percentile            # e.g. 90.0 -- top decile of blood by marrowness
 donor.bonemarrowlike_threshold_zscore                # the raw marrow_z cutoff that percentile is, for this model
 donor.celltype_proportions      # Output 1: bone marrow-like cell-type breakdown
-donor.program_scores_donor      # Output 2: this donor's P1-P5 program scores
+donor.program_scores_donor      # Output 2: this donor's P1-P8 program scores
 donor.generated_adata           # Output 3: 3,000 synthetic bone marrow-like cells
 donor.report                    # Output 4: composition + read-count stats + UMAP overlay
 prism.print_training_config(model)  # bonus: training hyperparameters

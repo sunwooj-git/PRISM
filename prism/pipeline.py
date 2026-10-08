@@ -103,8 +103,8 @@ class DonorResult:
                                                  # prism._encoder.z_to_percentile) -- cells at or
                                                  # above this raw z-score were called bone marrow-like
     celltype_proportions: pd.Series          # Output 1
-    program_scores_donor: np.ndarray         # Output 2: [5], this donor's own program scores
-    program_scores_per_cell: np.ndarray      # [n_cells_total, 5], diagnostic
+    program_scores_donor: np.ndarray         # Output 2: [K], this donor's own program scores
+    program_scores_per_cell: np.ndarray      # [n_cells_total, K], diagnostic
     generated_adata: ad.AnnData              # Output 3: N_GEN synthetic cells
     report: GenerationReport                 # Output 4
 

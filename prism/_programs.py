@@ -1,5 +1,5 @@
 """
-Projects encoder embeddings into the 5 trained NMF transcriptional programs.
+Projects encoder embeddings into PRISM's trained NMF transcriptional programs.
 
 Users are always scored through the single fixed NMF model shipped with the
 package (prog_model.joblib) -- program identity ("program 3") is therefore
@@ -64,7 +64,7 @@ def load_programs(artifacts_dir: str) -> ProgramBundle:
         raise RuntimeError(
             "Loaded prog_model.joblib does not reproduce consensus_programs.npz's "
             f"reference program loadings (perm={match['perm']}, corr={match['corr']}). "
-            "Program identity (P1..P5) would not be consistent with the trained "
+            "Program identity (P1..PK) would not be consistent with the trained "
             "reference -- refusing to proceed rather than silently mislabel programs."
         )
 

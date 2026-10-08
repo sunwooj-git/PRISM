@@ -53,11 +53,11 @@ RETRIEVAL_K = 20
 DEVICE_DEFAULT = "cuda"  # falls back to cpu automatically, see _utils.resolve_device
 
 # Weights are distributed via a Zenodo deposit (download-on-first-use, see
-# prism._artifacts.get_artifact_dir). https://doi.org/10.5281/zenodo.21982005
-# -- currently under restricted access pending publication, so downloads
-# via get_artifact_dir will 403 for unauthenticated users until it's made
-# public; local_dir= / PRISM_WEIGHTS_DIR remain the working option until then.
-ZENODO_RECORD_ID: Optional[str] = "21982005"
+# prism._artifacts.get_artifact_dir). https://doi.org/10.5281/zenodo.23233761
+# -- this version uses k=8 NMF transcriptional programs (previously k=5,
+# https://doi.org/10.5281/zenodo.21982005, which remains archived and
+# citable at that DOI but is superseded here).
+ZENODO_RECORD_ID: Optional[str] = "23233761"
 
 # Artifact filenames expected in the weights bundle (see prism._artifacts).
 ARTIFACT_FILES = [
