@@ -53,19 +53,37 @@ RETRIEVAL_K = 20
 DEVICE_DEFAULT = "cuda"  # falls back to cpu automatically, see _utils.resolve_device
 
 # Weights are distributed via a Zenodo deposit (download-on-first-use, see
-# prism._artifacts.get_artifact_dir). https://doi.org/10.5281/zenodo.23233761
-# -- this version uses k=8 NMF transcriptional programs (previously k=5,
-# https://doi.org/10.5281/zenodo.21982005, which remains archived and
-# citable at that DOI but is superseded here).
-ZENODO_RECORD_ID: Optional[str] = "23233761"
+# prism._artifacts.get_artifact_dir). https://doi.org/10.5281/zenodo.23243740
+# -- this version adds a second, k=5 NMF fit (prog_model_k5.joblib /
+# consensus_programs_k5.npz) used only for Output 2, alongside the existing
+# k=8 fit used only to condition generation -- see config.ARTIFACT_FILES
+# and README's Design notes for why there are two. Prior versions:
+# k=8-only at https://doi.org/10.5281/zenodo.23233761, original k=5 (pre-
+# encoder-retrain, incompatible with the current encoder) at
+# https://doi.org/10.5281/zenodo.21982005 -- both remain archived/citable.
+ZENODO_RECORD_ID: Optional[str] = "23243740"
 
 # Artifact filenames expected in the weights bundle (see prism._artifacts).
+#
+# Two separate NMF program fits are shipped, serving different outputs:
+#   - consensus_programs.npz / prog_model.joblib (k=8): conditions the flow
+#     for generation (Output 3/4) -- matches flow_celltype_model.pt's
+#     trained conditioning dimension.
+#   - consensus_programs_k5.npz / prog_model_k5.joblib (k=5): used only for
+#     Output 2 (donor.program_scores_donor/program_scores_per_cell) -- a
+#     separate, lower-k fit chosen for better program stability/
+#     interpretability, independent of the generation pathway.
+# Both are fit on the SAME encoder embeddings (consensus_embeddings.npz's
+# Z_all), via PRISM_core.py's fit_programs() -- they differ only in
+# programs_k, not in which embeddings they were fit on.
 ARTIFACT_FILES = [
     "consensus_model.pt",
     "consensus_arch.json",
     "consensus_summary.json",
     "consensus_programs.npz",
     "prog_model.joblib",
+    "consensus_programs_k5.npz",
+    "prog_model_k5.joblib",
     "consensus_bm_reference.npz",
     "bm_reference_celltypes.npz",
     "blood_marrowz_ref.npy",

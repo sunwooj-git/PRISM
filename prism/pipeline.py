@@ -30,7 +30,8 @@ class PRISMModel:
     artifacts_dir: str
     device: str
     encoder: EncoderBundle
-    programs: ProgramBundle
+    programs: ProgramBundle             # k=8: conditions generation (Output 3/4)
+    programs_k5: ProgramBundle          # k=5: Output 2 only (program_scores_donor/_per_cell)
     generation: GenerationBundle
     bm_reference_Z: np.ndarray            # consensus_bm_reference.npz's Z_bm, for the UMAP overlay + retrieval
     bm_reference_celltype: np.ndarray     # bm_reference_celltypes.npz, aligned to bm_reference_Z
@@ -54,14 +55,17 @@ class PRISMModel:
 def load_model(local_dir: Optional[str] = None, device: str = config.DEVICE_DEFAULT) -> PRISMModel:
     """
     Load the full trained PRISM model bundle. Downloads weights from
-    Hugging Face Hub on first use (cached thereafter) unless local_dir
-    already contains them -- see prism._artifacts.get_artifact_dir.
+    Zenodo on first use (cached thereafter) unless local_dir already
+    contains them -- see prism._artifacts.get_artifact_dir.
     """
     device = resolve_device(device)
     artifacts_dir = str(get_artifact_dir(local_dir=local_dir))
 
     encoder = load_encoder(artifacts_dir, device=device)
     programs = load_programs(artifacts_dir)
+    programs_k5 = load_programs(
+        artifacts_dir, model_file="prog_model_k5.joblib", components_file="consensus_programs_k5.npz",
+    )
     generation = load_generation_models(artifacts_dir, device=device)
 
     bm_ref = np.load(os.path.join(artifacts_dir, "consensus_bm_reference.npz"), allow_pickle=True)
@@ -86,7 +90,8 @@ def load_model(local_dir: Optional[str] = None, device: str = config.DEVICE_DEFA
 
     return PRISMModel(
         artifacts_dir=artifacts_dir, device=device, encoder=encoder,
-        programs=programs, generation=generation, bm_reference_Z=bm_reference_Z,
+        programs=programs, programs_k5=programs_k5, generation=generation,
+        bm_reference_Z=bm_reference_Z,
         bm_reference_celltype=bm_reference_celltype,
         bm_program_means_per_ct=bm_program_means_per_ct,
     )
@@ -193,8 +198,14 @@ def run_inference(
     # for the mask itself (that's computed via the percentile rank directly above).
     bonemarrowlike_threshold_zscore = float(np.percentile(model.encoder.blood_z_ref, config.MARROWLIKE_PERCENTILE))
 
-    # --- NMF program scores, all cells ---
+    # --- NMF program scores, all cells. Two separate fits, two separate
+    # purposes: P_all (k=8) conditions generation below; P_all_k5 only
+    # ever feeds Output 2 (program_scores_donor/_per_cell) -- see
+    # config.py's ARTIFACT_FILES comment for why they're not the same fit. ---
     P_all = program_scores(Z, model.programs.prog_model, model.programs.prog_scaler, model.programs.prog_method)
+    P_all_k5 = program_scores(
+        Z, model.programs_k5.prog_model, model.programs_k5.prog_scaler, model.programs_k5.prog_method,
+    )
 
     donor_ids = adata.obs[donor_key].astype(str).values
     celltypes = adata.obs[celltype_key].astype(str).values
@@ -231,6 +242,7 @@ def run_inference(
         proportions = pd.Series(ct_bml).value_counts(normalize=True) if n_bml > 0 else pd.Series(dtype=float)
 
         P_bml = P_all[d_bml_mask]
+        P_bml_k5 = P_all_k5[d_bml_mask]  # Output 2 only -- see P_all_k5 above
 
         # --- Per-cell-type program-score conditioning: 3-tier fallback, ---
         # matching paper/bm_generation_v6.py's generate_bm_twostage_per_ct
@@ -270,6 +282,11 @@ def run_inference(
         fallback_vec = _fallback_program_vector(P_donor_all, marrow_z_donor_all, config.FALLBACK_TAIL_Q)
         for ct in model.generation.unique_types:
             program_conditioning_per_ct.setdefault(ct, fallback_vec)
+
+        # Output 2's own fallback (n_bml == 0 case below) uses the k=5 fit,
+        # computed the same way (tail-mean over the donor's full blood
+        # population) but entirely independent of the k=8 vector above.
+        fallback_vec_k5 = _fallback_program_vector(P_all_k5[d_mask], marrow_z_donor_all, config.FALLBACK_TAIL_Q)
 
         # --- Stage 1 (generation only): k-NN retrieval-predicted cell-type ---
         # proportions, matching paper/bm_generation_v6.py's
@@ -334,8 +351,8 @@ def run_inference(
             bonemarrowlike_threshold_percentile=config.MARROWLIKE_PERCENTILE,
             bonemarrowlike_threshold_zscore=bonemarrowlike_threshold_zscore,
             celltype_proportions=proportions,
-            program_scores_donor=P_bml.mean(axis=0).astype(np.float32) if n_bml > 0 else fallback_vec,
-            program_scores_per_cell=P_all[d_mask],
+            program_scores_donor=P_bml_k5.mean(axis=0).astype(np.float32) if n_bml > 0 else fallback_vec_k5,
+            program_scores_per_cell=P_all_k5[d_mask],
             generated_adata=gen_adata, report=report,
         )
 

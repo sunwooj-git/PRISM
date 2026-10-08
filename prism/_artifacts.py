@@ -2,7 +2,7 @@
 Trained-weight distribution: download-on-first-use from PRISM's Zenodo
 deposit, cached locally so repeat runs don't re-download.
 
-The pip package itself ships no model weights (~215MB total for the files
+The pip package itself ships no model weights (~225MB total for the files
 actually needed at inference time -- see config.ARTIFACT_FILES). Excluded
 from that set are consensus_embeddings.npz (full-cohort diagnostic dump,
 ~170MB, not read by any inference-time code path) and consensus_blood_

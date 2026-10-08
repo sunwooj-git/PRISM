@@ -22,7 +22,7 @@ pip install -e .
 ```
 
 Requires Python >=3.10 (scvi-tools' dependency floor). Trained weights
-(~215MB) download automatically from PRISM's Zenodo deposit the first time
+(~225MB) download automatically from PRISM's Zenodo deposit the first time
 you call `prism.load_model()`, and are cached under `~/.cache/prism/weights`
 (override with the `PRISM_WEIGHTS_DIR` environment variable, or pass
 `local_dir=` directly to point at a local copy).
@@ -43,7 +43,7 @@ donor.n_bonemarrowlike, donor.n_cells_total          # bone marrow-like cell cou
 donor.bonemarrowlike_threshold_percentile            # e.g. 90.0 -- top decile of blood by marrowness
 donor.bonemarrowlike_threshold_zscore                # the raw marrow_z cutoff that percentile is, for this model
 donor.celltype_proportions      # Output 1: bone marrow-like cell-type breakdown
-donor.program_scores_donor      # Output 2: this donor's P1-P8 program scores
+donor.program_scores_donor      # Output 2: this donor's P1-P5 program scores (k=5, for stability/interpretability)
 donor.generated_adata           # Output 3: 3,000 synthetic bone marrow-like cells
 donor.report                    # Output 4: composition + read-count stats + UMAP overlay
 prism.print_training_config(model)  # bonus: training hyperparameters
@@ -78,12 +78,20 @@ PRISM accepts exactly one input: a blood scRNA-seq `AnnData`.
 - **`scripts/`** — maintainer-only utilities (`repair_missing_artifacts.py`
   — see its docstring for what it fixed and why, kept for provenance).
 
-Note: trained model weights (~215MB) are not part of this repo — they're
+Note: trained model weights (~225MB) are not part of this repo — they're
 distributed separately via Zenodo and downloaded automatically by
 `prism.load_model()` on first use (see Installation above).
 
 ## Design notes
 
+- PRISM ships **two separate NMF program fits**, not one: a k=5 fit used
+  only for Output 2 (`program_scores_donor`/`program_scores_per_cell`),
+  chosen for better program stability/interpretability, and a separate k=8
+  fit used only to condition generation (Output 3/4), matching the trained
+  flow's conditioning dimension. Both are fit on the same encoder
+  embeddings, but their program identities (P1..P5 vs. P1..P8) are
+  independent spaces — "program 3" in Output 2 is not the same axis as
+  "program 3" in generation's conditioning.
 - Generated expression is sampled from the trained negative-binomial
   decoder (mean + dispersion), not literally observed counts — realistic in
   distribution, not a real cell.

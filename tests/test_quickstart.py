@@ -4,7 +4,7 @@ and checks that all five I/O-contract outputs come back well-formed.
 
 Requires local model weights -- point PRISM_WEIGHTS_DIR at a directory
 containing them (see prism/_artifacts.py) or place them under weights/ at
-the repo root. Skipped otherwise, since CI shouldn't require downloading ~215MB of weights
+the repo root. Skipped otherwise, since CI shouldn't require downloading ~225MB of weights
 on every push; wire PRISM_WEIGHTS_DIR to a cached/pre-fetched location in
 CI to enable it.
 """

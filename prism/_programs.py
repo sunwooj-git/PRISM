@@ -54,15 +54,28 @@ class ProgramBundle:
     match_corr: np.ndarray            # per-program correlation vs. reference (integrity check)
 
 
-def load_programs(artifacts_dir: str) -> ProgramBundle:
-    bundle = joblib.load(os.path.join(artifacts_dir, "prog_model.joblib"))
-    prog = np.load(os.path.join(artifacts_dir, "consensus_programs.npz"), allow_pickle=True)
+def load_programs(
+    artifacts_dir: str,
+    model_file: str = "prog_model.joblib",
+    components_file: str = "consensus_programs.npz",
+) -> ProgramBundle:
+    """
+    Load a fitted NMF program bundle + its integrity check.
+
+    model_file/components_file let the same loader serve either of PRISM's
+    two separate program fits: the default (k=8) used to condition
+    generation, or the k=5 pair (prog_model_k5.joblib /
+    consensus_programs_k5.npz) used only for Output 2 -- see config.py's
+    ARTIFACT_FILES comment for why there are two.
+    """
+    bundle = joblib.load(os.path.join(artifacts_dir, model_file))
+    prog = np.load(os.path.join(artifacts_dir, components_file), allow_pickle=True)
     C_ref = prog["components"]
 
     match = match_components_hungarian(bundle["prog_model"].components_, C_ref)
     if not np.array_equal(match["perm"], np.arange(len(match["perm"]))) or np.min(match["corr"]) < 0.99:
         raise RuntimeError(
-            "Loaded prog_model.joblib does not reproduce consensus_programs.npz's "
+            f"Loaded {model_file} does not reproduce {components_file}'s "
             f"reference program loadings (perm={match['perm']}, corr={match['corr']}). "
             "Program identity (P1..PK) would not be consistent with the trained "
             "reference -- refusing to proceed rather than silently mislabel programs."

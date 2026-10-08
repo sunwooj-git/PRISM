@@ -32,7 +32,7 @@ def main():
         )
         print("\n[Output 1] Bone marrow-like cell-type proportions:")
         print(donor.celltype_proportions)
-        print("\n[Output 2] Donor-specific program scores (P1-P8):")
+        print("\n[Output 2] Donor-specific program scores (P1-P5, k=5):")
         print(donor.program_scores_donor)
         print(f"\n[Output 3] Generated synthetic cells: {donor.generated_adata.shape}")
         print("\n[Output 4] Generated cell-type composition:")
