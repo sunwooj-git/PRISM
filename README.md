@@ -84,14 +84,11 @@ distributed separately via Zenodo and downloaded automatically by
 
 ## Design notes
 
-- PRISM ships **two separate NMF program fits**, not one: a k=5 fit used
-  only for Output 2 (`program_scores_donor`/`program_scores_per_cell`),
-  chosen for better program stability/interpretability, and a separate k=8
-  fit used only to condition generation (Output 3/4), matching the trained
-  flow's conditioning dimension. Both are fit on the same encoder
-  embeddings, but their program identities (P1..P5 vs. P1..P8) are
-  independent spaces — "program 3" in Output 2 is not the same axis as
-  "program 3" in generation's conditioning.
+- PRISM ships two separate NMF program fits: a k=5 fit used for robust and
+  interpretable program readout (Output 2), and a separate k=8 fit used to
+  condition generation (Output 3/4). Both are fit on the same encoder
+  embeddings, but their program identities are independent — "program 3"
+  means different things in each.
 - Generated expression is sampled from the trained negative-binomial
   decoder (mean + dispersion), not literally observed counts — realistic in
   distribution, not a real cell.
