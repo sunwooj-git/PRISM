@@ -158,10 +158,10 @@ def plot_umap_overlay(
         ax_ref.legend(markerscale=3, fontsize=10, bbox_to_anchor=(1.02, 1), loc="upper left")
 
     ax_overlay = axes[-1]
-    ax_overlay.scatter(ref_umap.coords[:, 0], ref_umap.coords[:, 1], s=4, c="lightgrey", label="reference BM", linewidths=0)
+    ax_overlay.scatter(ref_umap.coords[:, 0], ref_umap.coords[:, 1], s=5, c="#EAEAEA", label="reference BM", linewidths=0)
     for ct_name in sorted(set(cell_type_generated.tolist())):
         m = cell_type_generated == ct_name
-        ax_overlay.scatter(gen_coords[m, 0], gen_coords[m, 1], s=18, c=_color_for(ct_name), label=ct_name, linewidths=0)
+        ax_overlay.scatter(gen_coords[m, 0], gen_coords[m, 1], s=24, c=_color_for(ct_name), label=ct_name, linewidths=0)
     ax_overlay.set_xlim(*ref_umap.xlim)
     ax_overlay.set_ylim(*ref_umap.ylim)
     ax_overlay.set_box_aspect(1)
