@@ -26,6 +26,23 @@ CELLTYPE_COLORS: Dict[str, str] = {
     "t_cell": "#1F77B4",        # Royal Blue
 }
 
+# Human-readable display label per PRISM cell-type category, used for plot
+# legends (CELLTYPE_COLORS keys stay as the internal category names used
+# throughout the rest of the package).
+CELLTYPE_MAP: Dict[str, str] = {
+    "b_cell": "B cells",
+    "dendritic": "Dendritic cells",
+    "erythroid": "Erythroid cells",
+    "macrophage": "Macrophages",
+    "megakaryocyte": "Megakaryocytes",
+    "monocyte": "Monocytes",
+    "neutrophil": "Neutrophils",
+    "nk_cell": "NK cells",
+    "plasma_cell": "Plasma cells",
+    "progenitor": "Progenitor cells",
+    "t_cell": "T cells",
+}
+
 
 @dataclass
 class GenerationReport:
@@ -74,6 +91,10 @@ def cell_type_composition(cell_type: np.ndarray) -> pd.Series:
 
 def _color_for(ct_name: str) -> str:
     return CELLTYPE_COLORS.get(ct_name, "#000000")
+
+
+def _label_for(ct_name: str) -> str:
+    return CELLTYPE_MAP.get(ct_name, ct_name)
 
 
 def fit_reference_umap(
@@ -147,7 +168,7 @@ def plot_umap_overlay(
         ax_ref = axes[0]
         for ct_name in sorted(set(ref_umap.celltype.tolist())):
             m = ref_umap.celltype == ct_name
-            ax_ref.scatter(ref_umap.coords[m, 0], ref_umap.coords[m, 1], s=5, c=_color_for(ct_name), label=ct_name, linewidths=0)
+            ax_ref.scatter(ref_umap.coords[m, 0], ref_umap.coords[m, 1], s=5, c=_color_for(ct_name), label=_label_for(ct_name), linewidths=0)
         ax_ref.set_xlim(*ref_umap.xlim)
         ax_ref.set_ylim(*ref_umap.ylim)
         ax_ref.set_box_aspect(1)
@@ -161,7 +182,7 @@ def plot_umap_overlay(
     ax_overlay.scatter(ref_umap.coords[:, 0], ref_umap.coords[:, 1], s=5, c="#EAEAEA", label="reference BM", linewidths=0)
     for ct_name in sorted(set(cell_type_generated.tolist())):
         m = cell_type_generated == ct_name
-        ax_overlay.scatter(gen_coords[m, 0], gen_coords[m, 1], s=24, c=_color_for(ct_name), label=ct_name, linewidths=0)
+        ax_overlay.scatter(gen_coords[m, 0], gen_coords[m, 1], s=24, c=_color_for(ct_name), label=_label_for(ct_name), linewidths=0)
     ax_overlay.set_xlim(*ref_umap.xlim)
     ax_overlay.set_ylim(*ref_umap.ylim)
     ax_overlay.set_box_aspect(1)
