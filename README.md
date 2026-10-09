@@ -134,7 +134,11 @@ figure.
 Left: the real reference bone marrow cohort, colored by cell type. Right:
 this donor's generated cells (colored) over the same reference (gray) —
 generated cells land on the correct real reference clusters for their
-assigned type.
+assigned type. The reference bone marrow cells (left panel, and the gray
+background on the right) are shown here only for comparison; a user's
+actual output is the generated cells alone (the colored points on the
+right), since real bone marrow data is never part of PRISM's input or
+output.
 
 ## Input requirements
 
