@@ -106,7 +106,9 @@ is never available as input.
 
 **Output 3 — `generated_adata`**: 3,000 synthetic bone marrow-like cells
 × 10,457 genes, raw counts sampled from the trained negative-binomial
-decoder (`(3000, 10457)`).
+decoder (`(3000, 10457)`). A standard `AnnData` object — save it with
+`donor.generated_adata.write_h5ad("path.h5ad")` to use it like any other
+scRNA-seq dataset downstream.
 
 **Output 4 — `report`**: generation's own cell-type composition (a
 separate, k-NN retrieval-based estimate — not the same computation as
