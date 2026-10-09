@@ -34,6 +34,8 @@ def main():
         print(donor.celltype_proportions)
         print("\n[Output 2] Donor-specific program scores (P1-P5, k=5):")
         print(donor.program_scores_donor)
+        print("\n[Output 2] Per-cell-type program scores:")
+        print(donor.program_scores_per_celltype)
         print(f"\n[Output 3] Generated synthetic cells: {donor.generated_adata.shape}")
         print("\n[Output 4] Generated cell-type composition:")
         print(donor.report.cell_type_composition)

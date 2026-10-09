@@ -110,6 +110,9 @@ class DonorResult:
     celltype_proportions: pd.Series          # Output 1
     program_scores_donor: np.ndarray         # Output 2: [K], this donor's own program scores
     program_scores_per_cell: np.ndarray      # [n_cells_total, K], diagnostic
+    program_scores_per_celltype: pd.DataFrame  # Output 2, per-cell-type: mean program scores
+                                                # + n_cells among this donor's own bone marrow-like
+                                                # cells, grouped by cell type (index)
     generated_adata: ad.AnnData              # Output 3: N_GEN synthetic cells
     report: GenerationReport                 # Output 4
 
@@ -244,6 +247,25 @@ def run_inference(
         P_bml = P_all[d_bml_mask]
         P_bml_k5 = P_all_k5[d_bml_mask]  # Output 2 only -- see P_all_k5 above
 
+        # Output 2, per-cell-type: mean k=5 program scores among this
+        # donor's own bone marrow-like cells, grouped by cell type -- same
+        # population Output 1 (celltype_proportions) summarizes, just
+        # program scores instead of composition. No minimum-cell-count
+        # filter, matching celltype_proportions' own precedent (small
+        # counts are shown as-is, not hidden) -- the "n_cells" column lets
+        # callers judge reliability themselves.
+        if n_bml > 0:
+            k5_cols = [f"P{i + 1}" for i in range(P_all_k5.shape[1])]
+            program_scores_per_celltype = (
+                pd.DataFrame(P_bml_k5, columns=k5_cols, index=ct_bml)
+                .groupby(level=0)
+                .mean()
+            )
+            program_scores_per_celltype["n_cells"] = pd.Series(ct_bml).value_counts()
+            program_scores_per_celltype = program_scores_per_celltype.sort_values("n_cells", ascending=False)
+        else:
+            program_scores_per_celltype = pd.DataFrame(columns=[f"P{i + 1}" for i in range(P_all_k5.shape[1])] + ["n_cells"])
+
         # --- Per-cell-type program-score conditioning: 3-tier fallback, ---
         # matching paper/bm_generation_v6.py's generate_bm_twostage_per_ct
         # exactly (verified against that source -- see config.py's
@@ -353,6 +375,7 @@ def run_inference(
             celltype_proportions=proportions,
             program_scores_donor=P_bml_k5.mean(axis=0).astype(np.float32) if n_bml > 0 else fallback_vec_k5,
             program_scores_per_cell=P_all_k5[d_mask],
+            program_scores_per_celltype=program_scores_per_celltype,
             generated_adata=gen_adata, report=report,
         )
 

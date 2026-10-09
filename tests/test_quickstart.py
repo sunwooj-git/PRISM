@@ -39,6 +39,8 @@ def test_quickstart_end_to_end():
 
     # Output 2: donor-specific program scores
     assert donor.program_scores_donor.shape == (5,)
+    assert list(donor.program_scores_per_celltype.columns) == ["P1", "P2", "P3", "P4", "P5", "n_cells"]
+    assert donor.program_scores_per_celltype["n_cells"].sum() == donor.n_bonemarrowlike
 
     # Output 3: synthetic cells
     assert donor.generated_adata.n_obs == 200

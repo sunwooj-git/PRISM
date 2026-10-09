@@ -88,15 +88,38 @@ Aggregated (donor-level):
 |---|---|---|---|---|
 | 0.287 | 0.172 | 0.309 | 0.167 | 0.271 |
 
-Per-cell-type: mean k=5 program scores, comparing this same toy donor's
-bone marrow-like blood cells against its own (synthetic) bone marrow
-cells — cell types with fewer than 5 cells on either side (B cells,
-dendritic cells, erythroid cells, macrophages, neutrophils, plasma
-cells, progenitor cells) are omitted rather than shown on an unstable
-mean. The "Actual (toy donor) BM" rows are included solely for
-comparison and validation; PRISM's actual output to users is derived
-entirely from bone marrow-like blood cells, since real bone marrow data
-is never available as input.
+Per-cell-type — `program_scores_per_celltype`: mean k=5 program scores
+among this donor's own bone marrow-like cells, grouped by cell type (the
+same population `celltype_proportions` summarizes, just program scores
+instead of composition). Unlike the comparison table further below, this
+real output includes every cell type present, regardless of count — a
+`n_cells` column is included so callers can judge reliability themselves
+rather than having small counts silently hidden.
+
+| **Cell Type** | **P1** | **P2** | **P3** | **P4** | **P5** | **n_cells** |
+|---|---|---|---|---|---|---|
+| ![](https://img.shields.io/badge/-%20-17BECF) NK cells | 0.296 | 0.175 | 0.389 | 0.183 | 0.206 | 68 |
+| ![](https://img.shields.io/badge/-%20-1F77B4) T cells | 0.192 | 0.097 | 0.189 | 0.112 | 0.464 | 18 |
+| ![](https://img.shields.io/badge/-%20-FF7F0E) Monocytes | 0.398 | 0.300 | 0.006 | 0.125 | 0.365 | 10 |
+| ![](https://img.shields.io/badge/-%20-9467BD) B cells | 0.218 | 0.084 | 0.008 | 0.500 | 0.258 | 1 |
+
+A plain `pandas.DataFrame`, in memory only —
+`donor.program_scores_per_celltype.to_csv("output2_per_celltype.csv")`
+if you want a file. `program_scores_donor`/`program_scores_per_cell`
+are plain `numpy` arrays — save one with `np.savetxt("output2.csv",
+donor.program_scores_donor, delimiter=",")`.
+
+**Validation only, not a user-facing output:** comparing this same toy
+donor's bone marrow-like blood cells against its own (synthetic) bone
+marrow cells — cell types with fewer than 5 cells on either side (B
+cells, dendritic cells, erythroid cells, macrophages, neutrophils,
+plasma cells, progenitor cells) are omitted rather than shown on an
+unstable mean. The "Actual (toy donor) BM" rows exist only because this
+toy donor happens to be synthetic; real PRISM users never have bone
+marrow data to compare against, so this comparison itself is not
+something `run_inference()` performs or returns — only the "BM-like
+blood" side (identical to the table above, restricted to n≥5) reflects
+a real output.
 
 | **Source** | **Cell Type** | **Count** | **P1** | **P2** | **P3** | **P4** | **P5** |
 |---|---|---|---|---|---|---|---|
@@ -106,12 +129,6 @@ is never available as input.
 | Actual (toy donor) BM | ![](https://img.shields.io/badge/-%20-FF7F0E) Monocytes | 924 | 0.416 | 0.377 | 0.091 | 0.144 | 0.254 |
 | Actual (toy donor) BM | ![](https://img.shields.io/badge/-%20-17BECF) NK cells | 629 | 0.304 | 0.220 | 0.428 | 0.168 | 0.166 |
 | Actual (toy donor) BM | ![](https://img.shields.io/badge/-%20-1F77B4) T cells | 1818 | 0.181 | 0.130 | 0.201 | 0.090 | 0.457 |
-
-`program_scores_donor`/`program_scores_per_cell` are plain `numpy`
-arrays, in memory only — save one to a file with
-`np.savetxt("output2.csv", donor.program_scores_donor, delimiter=",")`.
-(The per-cell-type comparison table above is a README-only illustration,
-not something `run_inference()` returns directly.)
 
 **Output 3 — `generated_adata`**: 3,000 synthetic bone marrow-like cells
 × 10,457 genes, raw counts sampled from the trained negative-binomial
