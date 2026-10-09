@@ -46,7 +46,7 @@ CELLTYPE_MAP: Dict[str, str] = {
 
 @dataclass
 class GenerationReport:
-    cell_type_composition: pd.Series          # fraction of generated cells per cell type
+    cell_type_composition: pd.Series          # proportion of generated cells per cell type
     read_count_stats: pd.DataFrame             # per-cell-type mean/median/std total counts
     umap_figure_path: Optional[str]
 
@@ -85,7 +85,7 @@ def summarize_generated(X_gen: np.ndarray, cell_type: np.ndarray) -> pd.DataFram
 
 def cell_type_composition(cell_type: np.ndarray) -> pd.Series:
     s = pd.Series(cell_type).value_counts(normalize=True)
-    s.name = "fraction"
+    s.name = "proportion"
     return s
 
 
