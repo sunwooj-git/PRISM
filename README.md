@@ -71,10 +71,10 @@ as illustrative of the output format, not a fidelity benchmark.
 
 | **Cell Type** | **Proportion** |
 |---|---|
-| ![](https://img.shields.io/badge/-%20-17BECF) NK cells | 0.7010 |
-| ![](https://img.shields.io/badge/-%20-1F77B4) T cells | 0.1856 |
-| ![](https://img.shields.io/badge/-%20-FF7F0E) Monocytes | 0.1031 |
-| ![](https://img.shields.io/badge/-%20-9467BD) B cells | 0.0103 |
+| ![](https://img.shields.io/badge/-%20-17BECF) NK cells | 0.701 |
+| ![](https://img.shields.io/badge/-%20-1F77B4) T cells | 0.186 |
+| ![](https://img.shields.io/badge/-%20-FF7F0E) Monocytes | 0.103 |
+| ![](https://img.shields.io/badge/-%20-9467BD) B cells | 0.010 |
 
 **Output 2 — `program_scores_donor`**: this donor's k=5 program readout
 (robust/interpretable, independent of generation — see Design notes).
@@ -82,6 +82,15 @@ as illustrative of the output format, not a fidelity benchmark.
 | P1 | P2 | P3 | P4 | P5 |
 |---|---|---|---|---|
 | 0.287 | 0.172 | 0.309 | 0.167 | 0.271 |
+
+![Radar plot comparing this donor's bone marrow-like blood cells' k=5 program scores against the real bone marrow reference cohort's own k=5 program scores, per cell type](docs/example_outputs/toy_donor_001_program_radar.png)
+
+Per-cell-type mean program-score profile (min. 5 cells per side; axes
+min-max normalized across the figure): this donor's bone marrow-like
+blood cells (blue) against the real bone marrow reference cohort (red),
+for the cell types with enough cells on both sides to compare. Cell
+types below that threshold for this donor (e.g. B cells, n=1) are
+omitted rather than shown on an unstable mean.
 
 **Output 3 — `generated_adata`**: 3,000 synthetic bone marrow-like cells
 × 10,457 genes, raw counts sampled from the trained negative-binomial
@@ -94,11 +103,11 @@ figure.
 
 | **Cell Type** | **Fraction** |
 |---|---|
-| ![](https://img.shields.io/badge/-%20-1F77B4) T cells | 0.5197 |
-| ![](https://img.shields.io/badge/-%20-17BECF) NK cells | 0.3330 |
-| ![](https://img.shields.io/badge/-%20-FF7F0E) Monocytes | 0.1140 |
-| ![](https://img.shields.io/badge/-%20-9467BD) B cells | 0.0310 |
-| ![](https://img.shields.io/badge/-%20-E7BA52) Dendritic cells | 0.0023 |
+| ![](https://img.shields.io/badge/-%20-1F77B4) T cells | 0.520 |
+| ![](https://img.shields.io/badge/-%20-17BECF) NK cells | 0.333 |
+| ![](https://img.shields.io/badge/-%20-FF7F0E) Monocytes | 0.114 |
+| ![](https://img.shields.io/badge/-%20-9467BD) B cells | 0.031 |
+| ![](https://img.shields.io/badge/-%20-E7BA52) Dendritic cells | 0.002 |
 
 | **Cell Type** | **Mean** | **Median** | **Std** | **Count** |
 |---|---|---|---|---|
