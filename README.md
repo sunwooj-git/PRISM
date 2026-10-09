@@ -76,6 +76,9 @@ as illustrative of the output format, not a fidelity benchmark.
 | ![](https://img.shields.io/badge/-%20-FF7F0E) Monocytes | 0.103 | 10 |
 | ![](https://img.shields.io/badge/-%20-9467BD) B cells | 0.010 | 1 |
 
+A plain `pandas.Series`, in memory only — save it with
+`donor.celltype_proportions.to_csv("output1.csv")` if you want a file.
+
 **Output 2 — `program_scores_donor`**: this donor's k=5 program readout
 (robust/interpretable, independent of generation — see Design notes).
 
@@ -103,6 +106,12 @@ is never available as input.
 | Actual (toy donor) BM | ![](https://img.shields.io/badge/-%20-FF7F0E) Monocytes | 924 | 0.416 | 0.377 | 0.091 | 0.144 | 0.254 |
 | Actual (toy donor) BM | ![](https://img.shields.io/badge/-%20-17BECF) NK cells | 629 | 0.304 | 0.220 | 0.428 | 0.168 | 0.166 |
 | Actual (toy donor) BM | ![](https://img.shields.io/badge/-%20-1F77B4) T cells | 1818 | 0.181 | 0.130 | 0.201 | 0.090 | 0.457 |
+
+`program_scores_donor`/`program_scores_per_cell` are plain `numpy`
+arrays, in memory only — e.g. `np.savetxt("output2.csv",
+donor.program_scores_donor, delimiter=",")` if you want a file. (The
+per-cell-type comparison table above is a README-only illustration, not
+something `run_inference()` returns directly.)
 
 **Output 3 — `generated_adata`**: 3,000 synthetic bone marrow-like cells
 × 10,457 genes, raw counts sampled from the trained negative-binomial
@@ -141,6 +150,13 @@ background on the right) are shown here only for comparison; a user's
 actual output is the generated cells alone (the colored points on the
 right), since real bone marrow data is never part of PRISM's input or
 output.
+
+`cell_type_composition` and `read_count_stats` are plain `pandas`
+objects, in memory only — `.to_csv()` each if you want files. The UMAP
+figure is the one exception with built-in file output, and even that is
+opt-in: it's only written (as a PNG, to `umap_out_dir`) if you pass that
+argument to `run_inference()`; otherwise `report.umap_figure_path` is
+`None` and no figure is generated at all.
 
 ## Input requirements
 
