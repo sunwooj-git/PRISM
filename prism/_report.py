@@ -97,10 +97,17 @@ def fit_reference_umap(
     reducer = umap.UMAP(random_state=seed)
     coords = reducer.fit_transform(Z_ref.astype(np.float32))
 
+    # 5% margin on each side so extreme points don't sit flush against the
+    # plot border -- pure padding, doesn't affect the UMAP layout itself.
+    x_min, x_max = coords[:, 0].min(), coords[:, 0].max()
+    y_min, y_max = coords[:, 1].min(), coords[:, 1].max()
+    x_pad = (x_max - x_min) * 0.05
+    y_pad = (y_max - y_min) * 0.05
+
     return ReferenceUMAP(
         reducer=reducer, coords=coords, celltype=ct_ref,
-        xlim=(coords[:, 0].min(), coords[:, 0].max()),
-        ylim=(coords[:, 1].min(), coords[:, 1].max()),
+        xlim=(x_min - x_pad, x_max + x_pad),
+        ylim=(y_min - y_pad, y_max + y_pad),
     )
 
 
@@ -140,25 +147,27 @@ def plot_umap_overlay(
         ax_ref = axes[0]
         for ct_name in sorted(set(ref_umap.celltype.tolist())):
             m = ref_umap.celltype == ct_name
-            ax_ref.scatter(ref_umap.coords[m, 0], ref_umap.coords[m, 1], s=3, c=_color_for(ct_name), label=ct_name, linewidths=0)
+            ax_ref.scatter(ref_umap.coords[m, 0], ref_umap.coords[m, 1], s=5, c=_color_for(ct_name), label=ct_name, linewidths=0)
         ax_ref.set_xlim(*ref_umap.xlim)
         ax_ref.set_ylim(*ref_umap.ylim)
-        ax_ref.set_xlabel("UMAP 1")
-        ax_ref.set_ylabel("UMAP 2")
+        ax_ref.set_xlabel("UMAP 1", fontsize=13)
+        ax_ref.set_ylabel("UMAP 2", fontsize=13)
+        ax_ref.tick_params(axis="both", labelsize=11)
         ax_ref.set_title("Reference bone marrow cells (real, by cell type)")
-        ax_ref.legend(markerscale=3, fontsize=7, bbox_to_anchor=(1.02, 1), loc="upper left")
+        ax_ref.legend(markerscale=3, fontsize=10, bbox_to_anchor=(1.02, 1), loc="upper left")
 
     ax_overlay = axes[-1]
-    ax_overlay.scatter(ref_umap.coords[:, 0], ref_umap.coords[:, 1], s=3, c="lightgrey", label="reference BM", linewidths=0)
+    ax_overlay.scatter(ref_umap.coords[:, 0], ref_umap.coords[:, 1], s=4, c="lightgrey", label="reference BM", linewidths=0)
     for ct_name in sorted(set(cell_type_generated.tolist())):
         m = cell_type_generated == ct_name
-        ax_overlay.scatter(gen_coords[m, 0], gen_coords[m, 1], s=6, c=_color_for(ct_name), label=ct_name, linewidths=0)
+        ax_overlay.scatter(gen_coords[m, 0], gen_coords[m, 1], s=18, c=_color_for(ct_name), label=ct_name, linewidths=0)
     ax_overlay.set_xlim(*ref_umap.xlim)
     ax_overlay.set_ylim(*ref_umap.ylim)
-    ax_overlay.set_xlabel("UMAP 1")
-    ax_overlay.set_ylabel("UMAP 2")
+    ax_overlay.set_xlabel("UMAP 1", fontsize=13)
+    ax_overlay.set_ylabel("UMAP 2", fontsize=13)
+    ax_overlay.tick_params(axis="both", labelsize=11)
     ax_overlay.set_title("Generated bone marrow-like cells vs. reference")
-    ax_overlay.legend(markerscale=2, fontsize=7, bbox_to_anchor=(1.02, 1), loc="upper left")
+    ax_overlay.legend(markerscale=2, fontsize=10, bbox_to_anchor=(1.02, 1), loc="upper left")
 
     fig.tight_layout()
     os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
