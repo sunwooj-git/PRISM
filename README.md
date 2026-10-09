@@ -83,14 +83,21 @@ as illustrative of the output format, not a fidelity benchmark.
 |---|---|---|---|---|
 | 0.287 | 0.172 | 0.309 | 0.167 | 0.271 |
 
-![Radar plot comparing this donor's bone marrow-like blood cells' k=5 program scores against the real bone marrow reference cohort's own k=5 program scores, per cell type](docs/example_outputs/toy_donor_001_program_radar.png)
+Per-cell-type mean k=5 program scores, comparing this same toy donor's
+bone marrow-like blood cells against its own (synthetic) bone marrow
+cells — cell types with fewer than 5 cells on either side (B cells,
+dendritic cells, erythroid cells, macrophages, neutrophils, plasma
+cells, progenitor cells) are omitted rather than shown on an unstable
+mean.
 
-Per-cell-type mean program-score profile (min. 5 cells per side; axes
-min-max normalized across the figure): this donor's bone marrow-like
-blood cells (blue) against the real bone marrow reference cohort (red),
-for the cell types with enough cells on both sides to compare. Cell
-types below that threshold for this donor (e.g. B cells, n=1) are
-omitted rather than shown on an unstable mean.
+| **Source** | **Cell Type** | **N** | **P1** | **P2** | **P3** | **P4** | **P5** |
+|---|---|---|---|---|---|---|---|
+| BM-like blood | ![](https://img.shields.io/badge/-%20-FF7F0E) Monocytes | 10 | 0.398 | 0.300 | 0.006 | 0.125 | 0.365 |
+| BM-like blood | ![](https://img.shields.io/badge/-%20-17BECF) NK cells | 68 | 0.296 | 0.175 | 0.389 | 0.183 | 0.206 |
+| BM-like blood | ![](https://img.shields.io/badge/-%20-1F77B4) T cells | 18 | 0.192 | 0.097 | 0.189 | 0.112 | 0.464 |
+| Actual (synthetic) BM | ![](https://img.shields.io/badge/-%20-FF7F0E) Monocytes | 924 | 0.416 | 0.377 | 0.091 | 0.144 | 0.254 |
+| Actual (synthetic) BM | ![](https://img.shields.io/badge/-%20-17BECF) NK cells | 629 | 0.304 | 0.220 | 0.428 | 0.168 | 0.166 |
+| Actual (synthetic) BM | ![](https://img.shields.io/badge/-%20-1F77B4) T cells | 1818 | 0.181 | 0.130 | 0.201 | 0.090 | 0.457 |
 
 **Output 3 — `generated_adata`**: 3,000 synthetic bone marrow-like cells
 × 10,457 genes, raw counts sampled from the trained negative-binomial
