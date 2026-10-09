@@ -53,6 +53,61 @@ A runnable version of this, plus a small synthetic demo dataset, is in
 [`examples/`](examples/) — see `examples/quickstart.py` and
 `examples/toy_sample.h5ad`.
 
+## Example outputs
+
+Actual outputs from running `examples/quickstart.py` against the toy demo
+dataset (3,000 cells, one synthetic donor) — real numbers from a real run,
+not illustrative placeholders.
+
+**Output 1 — `celltype_proportions`**: this donor's bone marrow-like
+cells' empirical cell-type breakdown (110 of 3,000 total cells were
+flagged bone marrow-like).
+
+| cell type | proportion |
+|---|---|
+| monocyte | 0.9545 |
+| t_cell | 0.0341 |
+| dendritic | 0.0114 |
+
+**Output 2 — `program_scores_donor`**: this donor's k=5 program readout
+(robust/interpretable, independent of generation — see Design notes).
+
+| P1 | P2 | P3 | P4 | P5 |
+|---|---|---|---|---|
+| 0.386 | 0.307 | 0.038 | 0.121 | 0.351 |
+
+**Output 3 — `generated_adata`**: 3,000 synthetic bone marrow-like cells
+× 10,457 genes, raw counts sampled from the trained negative-binomial
+decoder (`(3000, 10457)`).
+
+**Output 4 — `report`**: generation's own cell-type composition (a
+separate, k-NN retrieval-based estimate — not the same computation as
+Output 1) and per-cell-type read-count statistics, plus a UMAP overlay
+figure.
+
+| cell type | fraction |
+|---|---|
+| monocyte | 0.8567 |
+| t_cell | 0.1107 |
+| dendritic | 0.0220 |
+| nk_cell | 0.0100 |
+| plasma_cell | 0.0007 |
+
+| cell type | mean | median | std | count |
+|---|---|---|---|---|
+| dendritic | 4648 | 4651 | 154 | 66 |
+| monocyte | 2798 | 2785 | 171 | 2570 |
+| nk_cell | 3213 | 3192 | 121 | 30 |
+| plasma_cell | 28916 | 28916 | 29793 | 2 |
+| t_cell | 2132 | 2113 | 164 | 332 |
+
+![UMAP overlay: reference bone marrow cells (left) and this donor's generated cells against that same reference (right)](docs/example_outputs/toy_donor_001_umap.png)
+
+Left: the real reference bone marrow cohort, colored by cell type. Right:
+this donor's generated cells (colored) over the same reference (gray) —
+generated cells land on the correct real reference clusters for their
+assigned type.
+
 ## Input requirements
 
 PRISM accepts exactly one input: a blood scRNA-seq `AnnData`.
