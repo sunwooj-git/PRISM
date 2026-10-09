@@ -59,24 +59,22 @@ Actual outputs from running `examples/quickstart.py` against the toy demo
 dataset (9,708 cells, one synthetic donor) — real numbers from a real run,
 not illustrative placeholders.
 
-**Output 1 — `celltype_proportions`**: this donor's bone marrow-like
+**Output 1 — `celltype_proportions`**: the synthetic donor's bone marrow-like
 cells' empirical cell-type breakdown. 97 of 9,708 total cells exceeded the
-trained reference threshold (top 5% of the *training* blood cohort's
-marrowness distribution — not necessarily exactly 5% of any individual
-donor's own cells, since the cutoff is fixed against the training
-reference, not recomputed per donor). This toy donor is synthetic, built
-to statistically resemble a real donor at the per-cell-type level —
-composition specifically *within this extreme tail* can still diverge
+trained reference threshold (top 5% of the training blood cohort's
+marrowness distribution). This toy donor is synthetic, built to
+statistically resemble a real donor at the per-cell-type level —
+composition specifically within this extreme tail can still diverge
 from what the same real donor would show, since that tail is driven by
 individual outlier cells rather than per-type averages. Treat this table
 as illustrative of the output format, not a fidelity benchmark.
 
-| cell type | proportion |
+| **Cell Type** | **Proportion** |
 |---|---|
-| nk_cell | 0.7010 |
-| t_cell | 0.1856 |
-| monocyte | 0.1031 |
-| b_cell | 0.0103 |
+| ![](https://img.shields.io/badge/-%20-17BECF) NK cells | 0.7010 |
+| ![](https://img.shields.io/badge/-%20-1F77B4) T cells | 0.1856 |
+| ![](https://img.shields.io/badge/-%20-FF7F0E) Monocytes | 0.1031 |
+| ![](https://img.shields.io/badge/-%20-9467BD) B cells | 0.0103 |
 
 **Output 2 — `program_scores_donor`**: this donor's k=5 program readout
 (robust/interpretable, independent of generation — see Design notes).
@@ -94,21 +92,21 @@ separate, k-NN retrieval-based estimate — not the same computation as
 Output 1) and per-cell-type read-count statistics, plus a UMAP overlay
 figure.
 
-| cell type | fraction |
+| **Cell Type** | **Fraction** |
 |---|---|
-| t_cell | 0.5197 |
-| nk_cell | 0.3330 |
-| monocyte | 0.1140 |
-| b_cell | 0.0310 |
-| dendritic | 0.0023 |
+| ![](https://img.shields.io/badge/-%20-1F77B4) T cells | 0.5197 |
+| ![](https://img.shields.io/badge/-%20-17BECF) NK cells | 0.3330 |
+| ![](https://img.shields.io/badge/-%20-FF7F0E) Monocytes | 0.1140 |
+| ![](https://img.shields.io/badge/-%20-9467BD) B cells | 0.0310 |
+| ![](https://img.shields.io/badge/-%20-E7BA52) Dendritic cells | 0.0023 |
 
-| cell type | mean | median | std | count |
+| **Cell Type** | **Mean** | **Median** | **Std** | **Count** |
 |---|---|---|---|---|
-| b_cell | 2929 | 2910 | 178 | 93 |
-| dendritic | 4343 | 4293 | 169 | 7 |
-| monocyte | 2968 | 2963 | 132 | 342 |
-| nk_cell | 2770 | 2754 | 169 | 999 |
-| t_cell | 2495 | 2468 | 215 | 1559 |
+| ![](https://img.shields.io/badge/-%20-9467BD) B cells | 2929 | 2910 | 178 | 93 |
+| ![](https://img.shields.io/badge/-%20-E7BA52) Dendritic cells | 4343 | 4293 | 169 | 7 |
+| ![](https://img.shields.io/badge/-%20-FF7F0E) Monocytes | 2968 | 2963 | 132 | 342 |
+| ![](https://img.shields.io/badge/-%20-17BECF) NK cells | 2770 | 2754 | 169 | 999 |
+| ![](https://img.shields.io/badge/-%20-1F77B4) T cells | 2495 | 2468 | 215 | 1559 |
 
 ![UMAP overlay: reference bone marrow cells (left) and this donor's generated cells against that same reference (right)](docs/example_outputs/toy_donor_001_umap.png)
 
