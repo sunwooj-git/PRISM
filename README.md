@@ -71,10 +71,10 @@ as illustrative of the output format, not a fidelity benchmark.
 
 | **Cell Type** | **Proportion** | **Count** |
 |---|---|---|
-| ![](https://img.shields.io/badge/-%20-17BECF) NK cells | 0.701 | 68 |
-| ![](https://img.shields.io/badge/-%20-1F77B4) T cells | 0.186 | 18 |
-| ![](https://img.shields.io/badge/-%20-FF7F0E) Monocytes | 0.103 | 10 |
-| ![](https://img.shields.io/badge/-%20-9467BD) B cells | 0.010 | 1 |
+| ![](https://img.shields.io/badge/-%20-17BECF) NK cells | <small>0.701</small> | <small>68</small> |
+| ![](https://img.shields.io/badge/-%20-1F77B4) T cells | <small>0.186</small> | <small>18</small> |
+| ![](https://img.shields.io/badge/-%20-FF7F0E) Monocytes | <small>0.103</small> | <small>10</small> |
+| ![](https://img.shields.io/badge/-%20-9467BD) B cells | <small>0.010</small> | <small>1</small> |
 
 A plain `pandas.Series`, in memory only — save it with
 `donor.celltype_proportions.to_csv("output1.csv")` if you want a file.
@@ -86,7 +86,7 @@ Aggregated (donor-level):
 
 | P1 | P2 | P3 | P4 | P5 |
 |---|---|---|---|---|
-| 0.287 | 0.172 | 0.309 | 0.167 | 0.271 |
+| <small>0.287</small> | <small>0.172</small> | <small>0.309</small> | <small>0.167</small> | <small>0.271</small> |
 
 Per-cell-type — `program_scores_per_celltype`: mean k=5 program scores
 among this donor's own bone marrow-like cells, grouped by cell type (the
@@ -98,10 +98,10 @@ rather than having small counts silently hidden.
 
 | **Cell Type** | **P1** | **P2** | **P3** | **P4** | **P5** | **n_cells** |
 |---|---|---|---|---|---|---|
-| ![](https://img.shields.io/badge/-%20-17BECF) NK cells | 0.296 | 0.175 | 0.389 | 0.183 | 0.206 | 68 |
-| ![](https://img.shields.io/badge/-%20-1F77B4) T cells | 0.192 | 0.097 | 0.189 | 0.112 | 0.464 | 18 |
-| ![](https://img.shields.io/badge/-%20-FF7F0E) Monocytes | 0.398 | 0.300 | 0.006 | 0.125 | 0.365 | 10 |
-| ![](https://img.shields.io/badge/-%20-9467BD) B cells | 0.218 | 0.084 | 0.008 | 0.500 | 0.258 | 1 |
+| ![](https://img.shields.io/badge/-%20-17BECF) NK cells | <small>0.296</small> | <small>0.175</small> | <small>0.389</small> | <small>0.183</small> | <small>0.206</small> | <small>68</small> |
+| ![](https://img.shields.io/badge/-%20-1F77B4) T cells | <small>0.192</small> | <small>0.097</small> | <small>0.189</small> | <small>0.112</small> | <small>0.464</small> | <small>18</small> |
+| ![](https://img.shields.io/badge/-%20-FF7F0E) Monocytes | <small>0.398</small> | <small>0.300</small> | <small>0.006</small> | <small>0.125</small> | <small>0.365</small> | <small>10</small> |
+| ![](https://img.shields.io/badge/-%20-9467BD) B cells | <small>0.218</small> | <small>0.084</small> | <small>0.008</small> | <small>0.500</small> | <small>0.258</small> | <small>1</small> |
 
 A plain `pandas.DataFrame`, in memory only —
 `donor.program_scores_per_celltype.to_csv("output2_per_celltype.csv")`
@@ -123,12 +123,12 @@ a real output.
 
 | **Source** | **Cell Type** | **Count** | **P1** | **P2** | **P3** | **P4** | **P5** |
 |---|---|---|---|---|---|---|---|
-| BM-like blood | ![](https://img.shields.io/badge/-%20-FF7F0E) Monocytes | 10 | 0.398 | 0.300 | 0.006 | 0.125 | 0.365 |
-| BM-like blood | ![](https://img.shields.io/badge/-%20-17BECF) NK cells | 68 | 0.296 | 0.175 | 0.389 | 0.183 | 0.206 |
-| BM-like blood | ![](https://img.shields.io/badge/-%20-1F77B4) T cells | 18 | 0.192 | 0.097 | 0.189 | 0.112 | 0.464 |
-| Actual (toy donor) BM | ![](https://img.shields.io/badge/-%20-FF7F0E) Monocytes | 924 | 0.416 | 0.377 | 0.091 | 0.144 | 0.254 |
-| Actual (toy donor) BM | ![](https://img.shields.io/badge/-%20-17BECF) NK cells | 629 | 0.304 | 0.220 | 0.428 | 0.168 | 0.166 |
-| Actual (toy donor) BM | ![](https://img.shields.io/badge/-%20-1F77B4) T cells | 1818 | 0.181 | 0.130 | 0.201 | 0.090 | 0.457 |
+| BM-like blood | ![](https://img.shields.io/badge/-%20-FF7F0E) Monocytes | <small>10</small> | <small>0.398</small> | <small>0.300</small> | <small>0.006</small> | <small>0.125</small> | <small>0.365</small> |
+| BM-like blood | ![](https://img.shields.io/badge/-%20-17BECF) NK cells | <small>68</small> | <small>0.296</small> | <small>0.175</small> | <small>0.389</small> | <small>0.183</small> | <small>0.206</small> |
+| BM-like blood | ![](https://img.shields.io/badge/-%20-1F77B4) T cells | <small>18</small> | <small>0.192</small> | <small>0.097</small> | <small>0.189</small> | <small>0.112</small> | <small>0.464</small> |
+| Actual (toy donor) BM | ![](https://img.shields.io/badge/-%20-FF7F0E) Monocytes | <small>924</small> | <small>0.416</small> | <small>0.377</small> | <small>0.091</small> | <small>0.144</small> | <small>0.254</small> |
+| Actual (toy donor) BM | ![](https://img.shields.io/badge/-%20-17BECF) NK cells | <small>629</small> | <small>0.304</small> | <small>0.220</small> | <small>0.428</small> | <small>0.168</small> | <small>0.166</small> |
+| Actual (toy donor) BM | ![](https://img.shields.io/badge/-%20-1F77B4) T cells | <small>1818</small> | <small>0.181</small> | <small>0.130</small> | <small>0.201</small> | <small>0.090</small> | <small>0.457</small> |
 
 **Output 3 — `generated_adata`**: 3,000 synthetic bone marrow-like cells
 × 10,457 genes, raw counts sampled from the trained negative-binomial
@@ -143,19 +143,19 @@ figure.
 
 | **Cell Type** | **Fraction** |
 |---|---|
-| ![](https://img.shields.io/badge/-%20-1F77B4) T cells | 0.520 |
-| ![](https://img.shields.io/badge/-%20-17BECF) NK cells | 0.333 |
-| ![](https://img.shields.io/badge/-%20-FF7F0E) Monocytes | 0.114 |
-| ![](https://img.shields.io/badge/-%20-9467BD) B cells | 0.031 |
-| ![](https://img.shields.io/badge/-%20-E7BA52) Dendritic cells | 0.002 |
+| ![](https://img.shields.io/badge/-%20-1F77B4) T cells | <small>0.520</small> |
+| ![](https://img.shields.io/badge/-%20-17BECF) NK cells | <small>0.333</small> |
+| ![](https://img.shields.io/badge/-%20-FF7F0E) Monocytes | <small>0.114</small> |
+| ![](https://img.shields.io/badge/-%20-9467BD) B cells | <small>0.031</small> |
+| ![](https://img.shields.io/badge/-%20-E7BA52) Dendritic cells | <small>0.002</small> |
 
 | **Cell Type** | **Mean** | **Median** | **Std** | **Count** |
 |---|---|---|---|---|
-| ![](https://img.shields.io/badge/-%20-9467BD) B cells | 2929 | 2910 | 178 | 93 |
-| ![](https://img.shields.io/badge/-%20-E7BA52) Dendritic cells | 4343 | 4293 | 169 | 7 |
-| ![](https://img.shields.io/badge/-%20-FF7F0E) Monocytes | 2968 | 2963 | 132 | 342 |
-| ![](https://img.shields.io/badge/-%20-17BECF) NK cells | 2770 | 2754 | 169 | 999 |
-| ![](https://img.shields.io/badge/-%20-1F77B4) T cells | 2495 | 2468 | 215 | 1559 |
+| ![](https://img.shields.io/badge/-%20-9467BD) B cells | <small>2929</small> | <small>2910</small> | <small>178</small> | <small>93</small> |
+| ![](https://img.shields.io/badge/-%20-E7BA52) Dendritic cells | <small>4343</small> | <small>4293</small> | <small>169</small> | <small>7</small> |
+| ![](https://img.shields.io/badge/-%20-FF7F0E) Monocytes | <small>2968</small> | <small>2963</small> | <small>132</small> | <small>342</small> |
+| ![](https://img.shields.io/badge/-%20-17BECF) NK cells | <small>2770</small> | <small>2754</small> | <small>169</small> | <small>999</small> |
+| ![](https://img.shields.io/badge/-%20-1F77B4) T cells | <small>2495</small> | <small>2468</small> | <small>215</small> | <small>1559</small> |
 
 ![UMAP overlay: reference bone marrow cells (left) and this donor's generated cells against that same reference (right)](docs/example_outputs/toy_donor_001_umap.png)
 
