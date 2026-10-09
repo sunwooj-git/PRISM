@@ -108,10 +108,10 @@ is never available as input.
 | Actual (toy donor) BM | ![](https://img.shields.io/badge/-%20-1F77B4) T cells | 1818 | 0.181 | 0.130 | 0.201 | 0.090 | 0.457 |
 
 `program_scores_donor`/`program_scores_per_cell` are plain `numpy`
-arrays, in memory only — e.g. `np.savetxt("output2.csv",
-donor.program_scores_donor, delimiter=",")` if you want a file. (The
-per-cell-type comparison table above is a README-only illustration, not
-something `run_inference()` returns directly.)
+arrays, in memory only — save one to a file with
+`np.savetxt("output2.csv", donor.program_scores_donor, delimiter=",")`.
+(The per-cell-type comparison table above is a README-only illustration,
+not something `run_inference()` returns directly.)
 
 **Output 3 — `generated_adata`**: 3,000 synthetic bone marrow-like cells
 × 10,457 genes, raw counts sampled from the trained negative-binomial
