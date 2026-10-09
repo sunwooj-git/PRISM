@@ -80,10 +80,10 @@ A plain `pandas.Series`, in memory only — save it with
 `donor.celltype_proportions.to_csv("output1.csv")` if you want a file.
 
 **Output 2 — `program_scores_donor` / `program_scores_per_celltype`**:
-this donor's k=5 program readout (robust/interpretable, independent of
-generation — see Design notes).
+the synthetic donor's k=5 program readout (robust/interpretable,
+independent of generation — see Design notes).
 
-Aggregated (donor-level):
+Aggregated program profile (donor-level):
 
 | P1 | P2 | P3 | P4 | P5 |
 |---|---|---|---|---|
@@ -100,13 +100,8 @@ Per-cell-type program profile:
 | Actual (toy donor) BM | ![](https://img.shields.io/badge/-%20-17BECF) NK cells | <small><small>629</small></small> | <small><small>0.304</small></small> | <small><small>0.220</small></small> | <small><small>0.428</small></small> | <small><small>0.168</small></small> | <small><small>0.166</small></small> |
 | Actual (toy donor) BM | ![](https://img.shields.io/badge/-%20-1F77B4) T cells | <small><small>1818</small></small> | <small><small>0.181</small></small> | <small><small>0.130</small></small> | <small><small>0.201</small></small> | <small><small>0.090</small></small> | <small><small>0.457</small></small> |
 
-A bone marrow-like-cell-derived per-cell-type program profile
-(`program_scores_per_celltype`) is output alongside this aggregated
-summary — illustrated above (restricted to cell types with at least 5
-cells for a stable mean). The "Actual (toy donor) BM" rows are included
-solely for comparison and validation; PRISM's actual output to users is
-derived entirely from bone marrow-like blood cells, since real bone
-marrow data is never available as input.
+Per-cell-type program profile is restricted to cell types with at least 5 cells for a stable mean.  
+The "Actual (toy donor) BM" rows are included solely for comparison and validation; PRISM's actual output to users is derived entirely from bone marrow-like blood cells, since real bone marrow data is never available as input.
 
 `program_scores_donor`, `program_scores_per_cell`, and
 `program_scores_per_celltype` are plain in-memory `numpy`/`pandas`
