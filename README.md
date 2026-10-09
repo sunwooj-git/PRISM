@@ -100,7 +100,8 @@ Per-cell-type program profile:
 | Actual (toy donor) BM | ![](https://img.shields.io/badge/-%20-17BECF) NK cells | <small><small>629</small></small> | <small><small>0.304</small></small> | <small><small>0.220</small></small> | <small><small>0.428</small></small> | <small><small>0.168</small></small> | <small><small>0.166</small></small> |
 | Actual (toy donor) BM | ![](https://img.shields.io/badge/-%20-1F77B4) T cells | <small><small>1818</small></small> | <small><small>0.181</small></small> | <small><small>0.130</small></small> | <small><small>0.201</small></small> | <small><small>0.090</small></small> | <small><small>0.457</small></small> |
 
-Per-cell-type program profile is restricted to cell types with at least 5 cells for a stable mean.  
+The per-cell-type program profiles are restricted to cell types with at least 5 cells for a stable mean.
+
 The "Actual (toy donor) BM" rows are included solely for comparison and validation; PRISM's actual output to users is derived entirely from bone marrow-like blood cells, since real bone marrow data is never available as input.
 
 `program_scores_donor`, `program_scores_per_cell`, and
