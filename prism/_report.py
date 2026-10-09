@@ -13,17 +13,17 @@ from ._utils import log1p_cp10k
 # and any future one) so the same cell type always reads as the same color
 # regardless of which categories happen to be present in a given panel.
 CELLTYPE_COLORS: Dict[str, str] = {
-    "b_cell": "#4C72B0",
-    "dendritic": "#DD8452",
-    "erythroid": "#55A868",
-    "macrophage": "#C44E52",
-    "megakaryocyte": "#8172B2",
-    "monocyte": "#937860",
-    "neutrophil": "#DA8BC3",
-    "nk_cell": "#8C8C8C",
-    "plasma_cell": "#CCB974",
-    "progenitor": "#64B5CD",
-    "t_cell": "#1F77B4",
+    "b_cell": "#9467BD",        # Medium Purple
+    "dendritic": "#E7BA52",     # Warm Gold
+    "erythroid": "#E31A1C",     # Vibrant Crimson Red
+    "macrophage": "#D95F02",    # Deep Red-Orange
+    "megakaryocyte": "#B15928", # Maroon / Brown
+    "monocyte": "#FF7F0E",      # Bright Orange
+    "neutrophil": "#2CA02C",    # Forest Green
+    "nk_cell": "#17BECF",       # Teal / Cyan
+    "plasma_cell": "#E377C2",   # Orchid / Bright Pink
+    "progenitor": "#7F7F7F",    # Slate Grey
+    "t_cell": "#1F77B4",        # Royal Blue
 }
 
 

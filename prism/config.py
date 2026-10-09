@@ -6,9 +6,9 @@ N_GEN_DEFAULT = 3000
 
 # Bone-marrow-like threshold, expressed as a percentile of the trained
 # blood cohort's calibrated marrowness z-score distribution (consensus_
-# blood_reference.npz's marrow_z_blood). Matches the paper's canonical
-# "thres90_q0.10" run (top decile of blood = bone marrow-like).
-MARROWLIKE_PERCENTILE = 90.0
+# blood_reference.npz's marrow_z_blood). Top 5% of blood by marrowness =
+# bone marrow-like.
+MARROWLIKE_PERCENTILE = 95.0
 
 # Informational only: below this many of a donor's own bone marrow-like
 # cells of a given type, pipeline.run_inference prints a low-sample-size

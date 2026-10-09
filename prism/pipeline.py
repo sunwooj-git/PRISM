@@ -102,7 +102,7 @@ class DonorResult:
     donor_id: str
     n_cells_total: int
     n_bonemarrowlike: int
-    bonemarrowlike_threshold_percentile: float  # e.g. 90.0 -- config.MARROWLIKE_PERCENTILE
+    bonemarrowlike_threshold_percentile: float  # e.g. 95.0 -- config.MARROWLIKE_PERCENTILE
     bonemarrowlike_threshold_zscore: float      # the actual per-cell marrow_z cutoff this percentile
                                                  # corresponds to for this trained model (see
                                                  # prism._encoder.z_to_percentile) -- cells at or

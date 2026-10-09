@@ -40,7 +40,7 @@ result = prism.run_inference(model, adata, donor_key="person_id")
 
 donor = next(iter(result.per_donor.values()))
 donor.n_bonemarrowlike, donor.n_cells_total          # bone marrow-like cell counts
-donor.bonemarrowlike_threshold_percentile            # e.g. 90.0 -- top decile of blood by marrowness
+donor.bonemarrowlike_threshold_percentile            # e.g. 95.0 -- top 5% of blood by marrowness
 donor.bonemarrowlike_threshold_zscore                # the raw marrow_z cutoff that percentile is, for this model
 donor.celltype_proportions      # Output 1: bone marrow-like cell-type breakdown
 donor.program_scores_donor      # Output 2: this donor's P1-P5 program scores (k=5, for stability/interpretability)
@@ -56,25 +56,34 @@ A runnable version of this, plus a small synthetic demo dataset, is in
 ## Example outputs
 
 Actual outputs from running `examples/quickstart.py` against the toy demo
-dataset (3,000 cells, one synthetic donor) — real numbers from a real run,
+dataset (9,708 cells, one synthetic donor) — real numbers from a real run,
 not illustrative placeholders.
 
 **Output 1 — `celltype_proportions`**: this donor's bone marrow-like
-cells' empirical cell-type breakdown (110 of 3,000 total cells were
-flagged bone marrow-like).
+cells' empirical cell-type breakdown. 97 of 9,708 total cells exceeded the
+trained reference threshold (top 5% of the *training* blood cohort's
+marrowness distribution — not necessarily exactly 5% of any individual
+donor's own cells, since the cutoff is fixed against the training
+reference, not recomputed per donor). This toy donor is synthetic, built
+to statistically resemble a real donor at the per-cell-type level —
+composition specifically *within this extreme tail* can still diverge
+from what the same real donor would show, since that tail is driven by
+individual outlier cells rather than per-type averages. Treat this table
+as illustrative of the output format, not a fidelity benchmark.
 
 | cell type | proportion |
 |---|---|
-| monocyte | 0.9545 |
-| t_cell | 0.0341 |
-| dendritic | 0.0114 |
+| nk_cell | 0.7010 |
+| t_cell | 0.1856 |
+| monocyte | 0.1031 |
+| b_cell | 0.0103 |
 
 **Output 2 — `program_scores_donor`**: this donor's k=5 program readout
 (robust/interpretable, independent of generation — see Design notes).
 
 | P1 | P2 | P3 | P4 | P5 |
 |---|---|---|---|---|
-| 0.386 | 0.307 | 0.038 | 0.121 | 0.351 |
+| 0.287 | 0.172 | 0.309 | 0.167 | 0.271 |
 
 **Output 3 — `generated_adata`**: 3,000 synthetic bone marrow-like cells
 × 10,457 genes, raw counts sampled from the trained negative-binomial
@@ -87,19 +96,19 @@ figure.
 
 | cell type | fraction |
 |---|---|
-| monocyte | 0.8567 |
-| t_cell | 0.1107 |
-| dendritic | 0.0220 |
-| nk_cell | 0.0100 |
-| plasma_cell | 0.0007 |
+| t_cell | 0.5197 |
+| nk_cell | 0.3330 |
+| monocyte | 0.1140 |
+| b_cell | 0.0310 |
+| dendritic | 0.0023 |
 
 | cell type | mean | median | std | count |
 |---|---|---|---|---|
-| dendritic | 4648 | 4651 | 154 | 66 |
-| monocyte | 2798 | 2785 | 171 | 2570 |
-| nk_cell | 3213 | 3192 | 121 | 30 |
-| plasma_cell | 28916 | 28916 | 29793 | 2 |
-| t_cell | 2132 | 2113 | 164 | 332 |
+| b_cell | 2929 | 2910 | 178 | 93 |
+| dendritic | 4343 | 4293 | 169 | 7 |
+| monocyte | 2968 | 2963 | 132 | 342 |
+| nk_cell | 2770 | 2754 | 169 | 999 |
+| t_cell | 2495 | 2468 | 215 | 1559 |
 
 ![UMAP overlay: reference bone marrow cells (left) and this donor's generated cells against that same reference (right)](docs/example_outputs/toy_donor_001_umap.png)
 
@@ -126,7 +135,7 @@ PRISM accepts exactly one input: a blood scRNA-seq `AnnData`.
   encoder, NMF program projection, flow + gene decoder generation,
   CellTypist labeling, reporting).
 - **`examples/`** — `quickstart.py`, `toy_sample.h5ad` (synthetic single-donor
-  demo data), `make_toy_sample.py` (regenerates it).
+  demo data).
 - **`tests/`** — `test_imports.py` (always runs in CI), `test_quickstart.py`
   (exercises full inference against real weights; skips automatically unless
   `PRISM_WEIGHTS_DIR` is set).
