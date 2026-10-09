@@ -175,6 +175,8 @@ PRISM accepts exactly one input: a blood scRNA-seq `AnnData`.
   `PRISM_WEIGHTS_DIR` is set).
 - **`scripts/`** — maintainer-only utilities (`repair_missing_artifacts.py`
   — see its docstring for what it fixed and why, kept for provenance).
+- **`docs/example_outputs/`** — figures embedded in this README (e.g. the
+  UMAP overlay above), generated from the toy demo data.
 
 Note: trained model weights (~225MB) are not part of this repo — they're
 distributed separately via Zenodo and downloaded automatically by

@@ -7,7 +7,7 @@ dist/
 .pytest_cache/
 .DS_Store
 
-# Trained weights (~440MB) are distributed separately (Zenodo), not
+# Trained weights (~225MB) are distributed separately (Zenodo), not
 # committed to git. This directory is the local staging copy used to
 # build/test that release.
 weights/
