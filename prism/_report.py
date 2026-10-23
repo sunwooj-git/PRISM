@@ -182,7 +182,7 @@ def plot_umap_overlay(
     ax_overlay.scatter(ref_umap.coords[:, 0], ref_umap.coords[:, 1], s=5, c="#EAEAEA", label="reference BM", linewidths=0)
     for ct_name in sorted(set(cell_type_generated.tolist())):
         m = cell_type_generated == ct_name
-        ax_overlay.scatter(gen_coords[m, 0], gen_coords[m, 1], s=24, c=_color_for(ct_name), label=_label_for(ct_name), linewidths=0)
+        ax_overlay.scatter(gen_coords[m, 0], gen_coords[m, 1], s=29, c=_color_for(ct_name), label=_label_for(ct_name), linewidths=0)
     ax_overlay.set_xlim(*ref_umap.xlim)
     ax_overlay.set_ylim(*ref_umap.ylim)
     ax_overlay.set_box_aspect(1)
